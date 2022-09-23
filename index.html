@@ -2,12 +2,33 @@
 <html>
 
 <head>
-    <title>Canvs Drawing Test for Web and Mobile</title>
+    <title>Canvas Drawing Test for Web and Mobile</title>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 </head>
-
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    /*place the div at the center*/
+    .signature-pad {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
 <body>
-    <canvas id='thecanvas'  width='700' height='300' style='margin-left:auto;margin-right:auto;touch-action:none;border:1px solid #cccccc;'></canvas>
+    <div class="signature-pad">
+        <!-- Display a canvas in the midle of the page -->
+        <h2>Use the panel below to add your signature:</h2>
+        <p>Please sign using a touch device or your mouse.</p>
+        <canvas id='thecanvas'  width='800' height='400' style='margin-left:auto;margin-right:auto;touch-action:none;border:1px solid #cccccc;'></canvas>
+        <p><a href="#" id="clearCanvas">Clear</a> | <a href="#" id="saveCanvasImage">Save</a></p>
+        <p><img src="" alt="" width='800' height='400' id="canvasImg" ></p>
+    </div>
+   
     <script>
         let canvas = document.getElementById('thecanvas');
 
@@ -75,6 +96,25 @@
         canvas.addEventListener('touchstart', (e) => { on_canvas_touch_start(e) }, false);
         canvas.addEventListener('touchend', (e) => { on_canvas_touch_end(e) }, false);
         canvas.addEventListener('touchmove', (e) => { on_canvas_touch_move(e) }, false);
+
+        //function to clear the canvas
+        function clearCanvas() {
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        //function to save the canvas image as data url (png format by default)
+        function saveCanvasImage() {
+            let dataURL = canvas.toDataURL();
+            document.getElementById('canvasImg').src = dataURL;
+            console.log(dataURL);
+        }
+
+        //clear canvas button
+        document.getElementById('clearCanvas').addEventListener('click', clearCanvas, false);
+
+        //save canvas image button
+        document.getElementById('saveCanvasImage').addEventListener('click', saveCanvasImage, false);
     </script>
 </body>
 
