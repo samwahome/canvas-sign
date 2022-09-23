@@ -1,0 +1,1 @@
+This is a test for signing panels on mobile using touch and for desktops using a mouse.
