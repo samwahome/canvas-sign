@@ -168,7 +168,8 @@ function createMouse() {
     prevButton: 0
   };
   const bm = [1, 2, 4, 6, 5, 3]; // bit masks for mouse buttons
-  const mouseEvents = "mousemove,mousedown,mouseup".split(",");
+  const mouseEvents = "mousemove,mousedown,mouseup,touchstart,touchend,touchmove".split(",");
+
   const m = mouse;
   // one mouse handler
   function mouseMove(e) {
@@ -176,9 +177,9 @@ function createMouse() {
     m.x = e.pageX - m.bounds.left - scrollX;
     m.y = e.pageY - m.bounds.top - scrollY;
     
-    if (e.type === "mousedown") {
+    if (e.type === "mousedown" || e.type === "touchstart") {
       m.buttonRaw |= bm[e.which - 1];
-    } else if (e.type === "mouseup") {
+    } else if (e.type === "mouseup" || e.type === "touchend") {
       m.buttonRaw &= bm[e.which + 2];
     }
     // check if there should be a display update
